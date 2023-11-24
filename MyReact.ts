@@ -1,13 +1,19 @@
-const useState = <T>(initialValue: T): [() => T, (newValue: T) => void] => {
-    let _val = initialValue;
-    const state = () => _val;
-    const setState = (newValue: T) => {
-        _val = newValue;
-    };
-    return [state, setState];
+class ReactFramework {
+    useState<T>(initialValue: T): [() => T, (newValue: T) => void] {
+        let _val = initialValue;
+        const state = () => _val;
+        const setState = (newValue: T) => {
+            _val = newValue;
+        };
+        return [state, setState];
+    }
 }
 
-const [count, setCount] = useState(0);
-console.log(count());  // 0
-setCount(1);
-console.log(count());  // 1
+const React = new ReactFramework();
+const Counter = () => {
+    const [count, setCount] = React.useState(0);
+    return {
+        render: `Current value is ${count()}`,
+        click: () => setCount(count() + 1),
+    }
+};
