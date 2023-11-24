@@ -8,6 +8,11 @@ class ReactFramework {
         };
         return [state, setState];
     }
+    render(component) {
+        const { render, ...rest } = component();
+        console.log(render);
+        return rest;
+    }
 }
 const React = new ReactFramework();
 const Counter = () => {
@@ -17,3 +22,5 @@ const Counter = () => {
         click: () => setCount(count() + 1),
     };
 };
+const App = React.render(Counter);
+App.click();

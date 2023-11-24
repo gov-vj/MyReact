@@ -7,6 +7,12 @@ class ReactFramework {
         };
         return [state, setState];
     }
+
+    render<R extends { render: string }>(component: (...args: any[]) => R) {
+        const { render, ...rest} = component();
+        console.log(render);
+        return rest;
+    }
 }
 
 const React = new ReactFramework();
@@ -17,3 +23,6 @@ const Counter = () => {
         click: () => setCount(count() + 1),
     }
 };
+
+const App = React.render(Counter);
+App.click();
