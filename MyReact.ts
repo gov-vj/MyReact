@@ -1,10 +1,11 @@
 class ReactFramework {
     #component?: (...args: any[]) => any;
+    #internalState: unknown;
     useState<T>(initialValue: T): [() => T, (newValue: T) => void] {
-        let _val = initialValue;
-        const state = () => _val;
+        this.#internalState = this.#internalState ?? initialValue;
+        const state = () => this.#internalState as T;
         const setState = (newValue: T) => {
-            _val = newValue;
+            this.#internalState = newValue;
             this.#component && this.render(this.#component);
         };
         return [state, setState];

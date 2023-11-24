@@ -1,11 +1,12 @@
 "use strict";
 class ReactFramework {
     #component;
+    #internalState;
     useState(initialValue) {
-        let _val = initialValue;
-        const state = () => _val;
+        this.#internalState = this.#internalState ?? initialValue;
+        const state = () => this.#internalState;
         const setState = (newValue) => {
-            _val = newValue;
+            this.#internalState = newValue;
             this.#component && this.render(this.#component);
         };
         return [state, setState];

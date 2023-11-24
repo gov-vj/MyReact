@@ -1,7 +1,7 @@
 /home/govind/.nvm/versions/node/v20.9.0/bin/node /home/govind/workspace/MyReact/MyReact.js
 Current value is 0
-Current value is 0
-Current value is 0
-Current value is 0
+Current value is 1
+Current value is 2
+Current value is 3
 
 Process finished with exit code 0
