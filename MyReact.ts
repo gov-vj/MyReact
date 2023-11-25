@@ -33,9 +33,7 @@ const Counter = (initialName: string) => {
     const [name, setName] = React.useState(initialName);
     return {
         render: `${name} = ${count}`,
-        click: () => {
-            setCount(count => count + 1);
-        },
+        click: () => setCount(count => count + 1),
         changeName: setName
     }
 };
