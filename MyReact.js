@@ -5,8 +5,8 @@ class ReactFramework {
     useState(initialValue) {
         this.#internalState = this.#internalState ?? initialValue;
         const state = this.#internalState;
-        const setState = (newValue) => {
-            this.#internalState = newValue;
+        const setState = (newState) => {
+            this.#internalState = newState;
             this.#component && this.render(this.#component);
         };
         return [state, setState];
