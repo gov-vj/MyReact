@@ -28,17 +28,19 @@ class ReactFramework {
 }
 
 const React = new ReactFramework();
-const Counter = () => {
+const Counter = (initialName: string) => {
     const [count, setCount] = React.useState(0);
+    const [name, setName] = React.useState(initialName);
     return {
-        render: `Current value is ${count}`,
+        render: `${name} = ${count}`,
         click: () => {
             setCount(count => count + 1);
         },
+        changeName: setName
     }
 };
 
-const App = React.render(Counter);
+const App = React.render(() => Counter('Apples'));
 App.click();
 App.click();
 App.click();
