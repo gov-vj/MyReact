@@ -1,8 +1,20 @@
 /home/govind/.nvm/versions/node/v20.9.0/bin/node /home/govind/workspace/MyReact/MyReact.js
+effect running at each render
+run this effect only once
+count value changed to 0
+name value changed to Apples
 Apples = 0
+effect running at each render
+count value changed to 1
 Apples = 1
+effect running at each render
+name value changed to Orange
 Orange = 1
+effect running at each render
+count value changed to 2
 Orange = 2
+effect running at each render
+count value changed to 3
 Orange = 3
 
 Process finished with exit code 0
