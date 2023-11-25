@@ -6,7 +6,6 @@ class ReactFramework {
     #isNewCall = (idx) => idx === this.#internalState.length;
     useState(initialValue) {
         const idx = this.#idx;
-        const isNewCall = idx === this.#internalState.length;
         if (this.#isNewCall(idx)) {
             this.#internalState.push(initialValue);
         }
@@ -54,10 +53,9 @@ const React = new ReactFramework();
 const Counter = (initialName) => {
     const [count, setCount] = React.useState(0);
     const [name, setName] = React.useState(initialName);
-    React.useEffect(() => console.log('effect running at each render'));
-    React.useEffect(() => console.log('run this effect only once'), []);
-    React.useEffect(() => console.log(`count value changed to ${count}`), [count]);
-    React.useEffect(() => console.log(`name value changed to ${name}`), [name]);
+    React.useEffect(() => {
+        setCount(0);
+    }, [name]);
     return {
         render: `${name} = ${count}`,
         click: () => setCount(count => count + 1),
@@ -66,6 +64,6 @@ const Counter = (initialName) => {
 };
 const App = React.render(() => Counter('Apples'));
 App.click();
+console.log('click event done');
 App.changeName('Orange');
-App.click();
-App.click();
+console.log('change name done');
