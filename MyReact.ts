@@ -1,11 +1,16 @@
 class ReactFramework {
     #component?: (...args: any[]) => any;
     #internalState: unknown;
-    useState<T>(initialValue: T): [T, (newState: T) => void] {
+    useState<T>(initialValue: T): [T, (newState: T | ((oldState: T) => T)) => void] {
         this.#internalState = this.#internalState ?? initialValue;
         const state: T = this.#internalState as T;
-        const setState = (newState: T) => {
-            this.#internalState = newState;
+        const setState = (newState: T | ((oldState: T) => T)) => {
+            if (newState instanceof Function) {
+                this.#internalState = newState(this.#internalState as T);
+            } else {
+                this.#internalState = newState;
+            }
+
             this.#component && this.render(this.#component);
         };
         return [state, setState];
@@ -28,7 +33,7 @@ const Counter = () => {
     return {
         render: `Current value is ${count}`,
         click: () => {
-            setCount(count + 1);
+            setCount(count => count + 1);
         },
     }
 };

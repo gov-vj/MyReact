@@ -6,7 +6,12 @@ class ReactFramework {
         this.#internalState = this.#internalState ?? initialValue;
         const state = this.#internalState;
         const setState = (newState) => {
-            this.#internalState = newState;
+            if (newState instanceof Function) {
+                this.#internalState = newState(this.#internalState);
+            }
+            else {
+                this.#internalState = newState;
+            }
             this.#component && this.render(this.#component);
         };
         return [state, setState];
@@ -26,7 +31,7 @@ const Counter = () => {
     return {
         render: `Current value is ${count}`,
         click: () => {
-            setCount(count + 1);
+            setCount(count => count + 1);
         },
     };
 };
