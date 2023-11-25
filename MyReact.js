@@ -4,7 +4,7 @@ class ReactFramework {
     #internalState;
     useState(initialValue) {
         this.#internalState = this.#internalState ?? initialValue;
-        const state = () => this.#internalState;
+        const state = this.#internalState;
         const setState = (newValue) => {
             this.#internalState = newValue;
             this.#component && this.render(this.#component);
@@ -24,8 +24,10 @@ const React = new ReactFramework();
 const Counter = () => {
     const [count, setCount] = React.useState(0);
     return {
-        render: `Current value is ${count()}`,
-        click: () => setCount(count() + 1),
+        render: `Current value is ${count}`,
+        click: () => {
+            setCount(count + 1);
+        },
     };
 };
 const App = React.render(Counter);

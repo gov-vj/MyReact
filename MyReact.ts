@@ -1,9 +1,9 @@
 class ReactFramework {
     #component?: (...args: any[]) => any;
     #internalState: unknown;
-    useState<T>(initialValue: T): [() => T, (newValue: T) => void] {
+    useState<T>(initialValue: T): [T, (newValue: T) => void] {
         this.#internalState = this.#internalState ?? initialValue;
-        const state = () => this.#internalState as T;
+        const state: T = this.#internalState as T;
         const setState = (newValue: T) => {
             this.#internalState = newValue;
             this.#component && this.render(this.#component);
@@ -26,8 +26,10 @@ const React = new ReactFramework();
 const Counter = () => {
     const [count, setCount] = React.useState(0);
     return {
-        render: `Current value is ${count()}`,
-        click: () => setCount(count() + 1),
+        render: `Current value is ${count}`,
+        click: () => {
+            setCount(count + 1);
+        },
     }
 };
 
