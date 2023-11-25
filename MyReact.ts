@@ -1,18 +1,26 @@
 class ReactFramework {
     #component?: (...args: any[]) => any;
-    #internalState: unknown;
+    readonly #internalState: unknown[] = [];
+    #idx = 0;
     useState<T>(initialValue: T): [T, (newState: T | ((oldState: T) => T)) => void] {
-        this.#internalState = this.#internalState ?? initialValue;
-        const state: T = this.#internalState as T;
+        const idx = this.#idx;
+        const isNewCall = idx === this.#internalState.length;
+        if (isNewCall) {
+            this.#internalState.push(initialValue);
+        }
+
+        const state: T = this.#internalState[idx] as T;
         const setState = (newState: T | ((oldState: T) => T)) => {
             if (newState instanceof Function) {
-                this.#internalState = newState(this.#internalState as T);
+                this.#internalState[idx] = newState(this.#internalState[idx] as T);
             } else {
-                this.#internalState = newState;
+                this.#internalState[idx] = newState;
             }
 
             this.#component && this.render(this.#component);
         };
+
+        this.#idx += 1;
         return [state, setState];
     }
 
@@ -21,6 +29,7 @@ class ReactFramework {
             this.#component = component;
         }
 
+        this.#idx = 0;
         const { render, ...rest} = component();
         console.log(render);
         return rest;
@@ -40,5 +49,6 @@ const Counter = (initialName: string) => {
 
 const App = React.render(() => Counter('Apples'));
 App.click();
+App.changeName('Orange');
 App.click();
 App.click();

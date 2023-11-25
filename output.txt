@@ -1,7 +1,8 @@
 /home/govind/.nvm/versions/node/v20.9.0/bin/node /home/govind/workspace/MyReact/MyReact.js
-0 = 0
-1 = 1
-2 = 2
-3 = 3
+Apples = 0
+Apples = 1
+Orange = 1
+Orange = 2
+Orange = 3
 
 Process finished with exit code 0

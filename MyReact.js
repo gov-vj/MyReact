@@ -1,25 +1,32 @@
 "use strict";
 class ReactFramework {
     #component;
-    #internalState;
+    #internalState = [];
+    #idx = 0;
     useState(initialValue) {
-        this.#internalState = this.#internalState ?? initialValue;
-        const state = this.#internalState;
+        const idx = this.#idx;
+        const isNewCall = idx === this.#internalState.length;
+        if (isNewCall) {
+            this.#internalState.push(initialValue);
+        }
+        const state = this.#internalState[idx];
         const setState = (newState) => {
             if (newState instanceof Function) {
-                this.#internalState = newState(this.#internalState);
+                this.#internalState[idx] = newState(this.#internalState[idx]);
             }
             else {
-                this.#internalState = newState;
+                this.#internalState[idx] = newState;
             }
             this.#component && this.render(this.#component);
         };
+        this.#idx += 1;
         return [state, setState];
     }
     render(component) {
         if (!this.#component) {
             this.#component = component;
         }
+        this.#idx = 0;
         const { render, ...rest } = component();
         console.log(render);
         return rest;
@@ -37,5 +44,6 @@ const Counter = (initialName) => {
 };
 const App = React.render(() => Counter('Apples'));
 App.click();
+App.changeName('Orange');
 App.click();
 App.click();
